@@ -69,6 +69,7 @@ public class BinaryFileDownloader extends FileTransfer implements Downloader {
 //                receivePacket = new DatagramPacket(bufferIN, bufferIN.length);
             }
             socket.receive(bufferIN);
+//            System.out.println(i + ": " + Arrays.toString(bufferIN));
             if (!address.equals(socket.getSocketAddress()))
                 throw new IOException("Puoi ricevere da un solo peer alla volta");
 

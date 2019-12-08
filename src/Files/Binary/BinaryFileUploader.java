@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.SocketAddress;
+import java.util.Arrays;
 
 public class BinaryFileUploader extends FileTransfer implements Uploader {
 
@@ -23,10 +24,10 @@ public class BinaryFileUploader extends FileTransfer implements Uploader {
         final int packetSize = 1024;
 
         //mando la lunghezza del file
-        final long nPackets = (long) Math.ceil((double) file.length() / (packetSize - Long.BYTES));
-        System.out.println("File length: " + (double) file.length() / (packetSize - Long.BYTES));
+        final long nPackets = (long) Math.ceil((double) file.length() / packetSize);
+        System.out.println("File length: " + (double) file.length() / packetSize);
 //        final String n = Integer.toString(nPackets);
-        final long totalLength = file.length() + Long.BYTES * nPackets;
+        final long totalLength = file.length();
 //        byte[] bufferOUT = ByteBuffer.allocate(Long.BYTES).putLong(totalLength).array();
 //        final DatagramPacket packetNumber = new DatagramPacket(bufferOUT, bufferOUT.length, address);
 //        socket.send(packetNumber);
@@ -48,6 +49,7 @@ public class BinaryFileUploader extends FileTransfer implements Uploader {
             }
             bis.read(bufferOUT, 0, bufferOUT.length);
             socket.send(bufferOUT, address);
+//            System.out.println(sentPackets + ": " + Arrays.toString(bufferOUT));
 
             //Sleep di 1 ms ogni 10 pacchetti perchè altrimenti spariscono i pacchetti
             if (sentPackets % 10 == 0)
