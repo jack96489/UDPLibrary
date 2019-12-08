@@ -1,16 +1,16 @@
 package Files;
 
-import Sockets.UDPSocket;
+import Sockets.UDPSocketUtils;
 
 import java.io.Closeable;
 import java.net.SocketAddress;
 
 public abstract class FileTransfer implements Closeable {
-    protected final UDPSocket socket;
+    protected final UDPSocketUtils socket;
     protected final SocketAddress address;
 
 
-    public FileTransfer(UDPSocket socket, SocketAddress address) {
+    public FileTransfer(UDPSocketUtils socket, SocketAddress address) {
         this.socket = socket;
         this.address = address;
     }

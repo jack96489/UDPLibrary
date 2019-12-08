@@ -2,7 +2,7 @@ package Files.Text;
 
 import Files.Downloader;
 import Files.FileTransfer;
-import Sockets.UDPSocket;
+import Sockets.UDPSocketUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +12,7 @@ import java.net.SocketAddress;
 public class TextFileDownloader extends FileTransfer implements Downloader {
     private static final String endCommunicationSequence = "endoffile";
 
-    public TextFileDownloader(UDPSocket socket, SocketAddress serverAddress) {
+    public TextFileDownloader(UDPSocketUtils socket, SocketAddress serverAddress) {
         super(socket, serverAddress);
     }
 

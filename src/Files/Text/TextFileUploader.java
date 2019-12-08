@@ -2,7 +2,7 @@ package Files.Text;
 
 import Files.FileTransfer;
 import Files.Uploader;
-import Sockets.UDPSocket;
+import Sockets.UDPSocketUtils;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -11,7 +11,7 @@ import java.net.SocketAddress;
 
 public class TextFileUploader extends FileTransfer implements Uploader {
 
-    public TextFileUploader(UDPSocket socket, SocketAddress serverAddress) {
+    public TextFileUploader(UDPSocketUtils socket, SocketAddress serverAddress) {
         super(socket, serverAddress);
         //System.out.println("client pronto");
     }

@@ -8,16 +8,21 @@ package Sockets;
 import java.io.IOException;
 import java.net.*;
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 
-public class UDPSocket {
+public class UDPSocketUtils {
     protected final DatagramSocket socket;
-    private DatagramPacket lastReceivedPacket;
+    protected DatagramPacket lastReceivedPacket;
 
-    public UDPSocket() throws SocketException {
+    public UDPSocketUtils(DatagramSocket socket) {
+        this.socket = socket;
+    }
+
+    public UDPSocketUtils() throws SocketException {
         socket = new DatagramSocket();
     }
 
-    public UDPSocket(int port) throws SocketException {
+    public UDPSocketUtils(int port) throws SocketException {
         socket = new DatagramSocket(port);
     }
 
@@ -31,6 +36,7 @@ public class UDPSocket {
 
     public String receiveString() throws IOException {
         String ricevuto = new String(receive());
+//        System.out.println("BBB: " + ricevuto);
 
         // elaborazione dei dati ricevuti eliminando i caratteri in eccesso
         return ricevuto.substring(0, lastReceivedPacket.getLength());
@@ -41,20 +47,24 @@ public class UDPSocket {
         DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, address);
         //Invio
         socket.send(sendPacket);
+//        System.out.println("SENT: " + Arrays.toString(buffer));
     }
 
     public void send(byte[] buffer, int port, String ip) throws IOException {
         send(buffer, new InetSocketAddress(ip, port));
     }
 
-    protected byte[] receive() throws IOException {
+    /**
+     * Receive an array of 1024 bytes
+     *
+     * @return buffer
+     * @throws IOException
+     */
+    public byte[] receive() throws IOException {
         //Creo l'allocazione del pacchetto da ricevere
         byte[] bufferIN = new byte[1024];
-        lastReceivedPacket = new DatagramPacket(bufferIN, bufferIN.length);
-
-        //Aspetto il pacchetto
-        socket.receive(lastReceivedPacket);
-
+        receive(bufferIN);
+//        System.out.println("BUFFERIN2: " + bufferIN + ": " + Arrays.toString(bufferIN));
         return bufferIN;
     }
 
@@ -63,6 +73,7 @@ public class UDPSocket {
 
         //Aspetto il pacchetto
         socket.receive(lastReceivedPacket);
+//        System.out.println("BUFFERIN1: " + bufferIN + ": " + Arrays.toString(bufferIN));
     }
 
     public void sendByte(byte b, SocketAddress address) throws IOException {
@@ -95,21 +106,13 @@ public class UDPSocket {
 
     public int receiveInteger() throws IOException {
         byte[] buff = new byte[Integer.BYTES];
-        lastReceivedPacket = new DatagramPacket(buff, buff.length);
-
-        //Aspetto il pacchetto
-        socket.receive(lastReceivedPacket);
-
+        receive(buff);
         return ByteBuffer.wrap(buff).getInt();
     }
 
     public long receiveLong() throws IOException {
         byte[] buff = new byte[Long.BYTES];
-        lastReceivedPacket = new DatagramPacket(buff, buff.length);
-
-        //Aspetto il pacchetto
-        socket.receive(lastReceivedPacket);
-
+        receive(buff);
         return ByteBuffer.wrap(buff).getLong();
     }
 
