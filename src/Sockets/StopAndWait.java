@@ -57,7 +57,7 @@ public class StopAndWait extends UDPSocketUtils {
      */
     protected void receive(byte[] buffer, boolean sendAck) throws IOException {
         super.receive(buffer);
-        if (!isAck(buffer) && sendAck && new Random().nextBoolean()) {
+        if (!isAck(buffer) && sendAck) {
 //            System.out.println("MANDO ACKKK");
             sendAck(getSocketAddress());
         }
