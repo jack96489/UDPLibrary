@@ -52,12 +52,12 @@ public class BinaryFileUploader extends FileTransfer implements Uploader {
 //            System.out.println(sentPackets + ": " + Arrays.toString(bufferOUT));
 
             //Sleep di 1 ms ogni 10 pacchetti perchè altrimenti spariscono i pacchetti
-            if (sentPackets % 10 == 0)
-                try {
-                    Thread.sleep(1);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+//            if (sentPackets % 10 == 0)
+//                try {
+//                    Thread.sleep(1);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
 
             if (sentPackets % 1000 == 0)
                 System.out.println("Inviato pacchetto " + sentPackets);

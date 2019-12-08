@@ -53,12 +53,11 @@ public class StopAndWaitNoisyRecipient extends StopAndWait {
     @Override
     public void receive(byte[] buffer) throws IOException {
         byte[] buff = new byte[buffer.length + Long.BYTES];
-        System.out.println("RICEVO");
         super.receive(buff, false);
 //        System.out.println(sequenceNumber + " - " + getSeqNumber(buff));
         if (sequenceNumber == getSeqNumber(buff)) {
 //            System.out.println("RICEVUTO");
-//            if (new Random().nextInt(1000) != 5)        //test
+//            if (new Random().nextInt(2000) != 5)        //test
             sendAck(getSocketAddress());
             lastReceivedPacket.setLength(lastReceivedPacket.getLength() - Long.BYTES);        //Hack to remove the sequence number
             System.arraycopy(buff, Long.BYTES, buffer, 0, buffer.length);
